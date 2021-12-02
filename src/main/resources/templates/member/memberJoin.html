@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Join</title>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <form action="/member/memberJoin" method="post" role="form" th:object="${memberFormDto}">
+
+        <label th:for="memberId">아이디</label><br>
+        <input type="text" th:field="*{memberId}" placeholder="아이디를 입력해주세요"><br>
+
+        <label th:for="memberPw">비밀번호</label><br>
+        <input type="password" th:field="*{memberPw}" placeholder="비밀번호를 입력해주세요"><br>
+
+        <label th:for="memberName">이름</label><br>
+        <input type="text" th:field="*{memberName}" placeholder="이름을 입력해주세요"><br>
+
+        <label th:for="memberAddress">주소</label><br>
+        <input type="text" th:field="*{memberAddress}"><br>
+
+        <label th:for="memberPhone">휴대폰</label><br>
+        <input type="tel" th:field="*{memberPhone}"><br>
+
+        <label th:for="memberEmail">이메일</label><br>
+        <input type="email" th:field="*{memberEmail}"><br>
+
+        <input type="submit">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+
+    </form>
+
+
+
+
+</body>
+</html>

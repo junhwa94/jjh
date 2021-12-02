@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 목록</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>회원 목록</h1>
+    <table border="1">
+        <tr>
+            <td>번호</td>
+            <td>아이디</td>
+            <td>비밀번호</td>
+            <td>이름</td>
+            <td>주소</td>
+            <td>휴대폰</td>
+            <td>이메일</td>
+        </tr>
+
+        <tr th:each="memberList:${memberList}">
+            <td th:text="${memberList.mNo}"></td>
+            <td th:text="${memberList.memberId}"></td>
+            <td th:text="${memberList.memberPw}"></td>
+            <td th:text="${memberList.memberName}"></td>
+            <td th:text="${memberList.memberAddress}"></td>
+            <td th:text="${memberList.memberPhone}"></td>
+            <td th:text="${memberList.memberEmail}"></td>
+
+        </tr>
+
+    </table>
+
+    <nav aria-label="Page navigation example">
+
+        <!-- 현재 페이지에서 그룹룹페이지 갯수 정 -->
+        <ul class="pagination"
+            th:with="start=${T(Math).floor(memberList.number/10)*10 + 1},
+                    last=(${start + 9 < memberList.totalPages ? start + 9 : memberList.totalPages})">
+
+            <!-- 첫 페이지 -->
+            <li class="page-item">
+                <a class="page-link" th:href="@{/member/memberList(page=1)}">First</a>
+            </li>
+
+            <!-- 이전 페이지 -->
+            <li class="page-item" th:class="${memberList.first} ? 'disabled'" >
+                <a class="page-link" th:href="${memberList.first} ? '#' :@{/member/memberList(page=${memberList.number})}">&lt;</a>
+            </li>
+
+            <!-- 현재 페이지 그룹의 페이지 나열 -->
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:classappend="${page == memberList.number + 1} ? 'active' : '' ">
+                <a class="page-link" th:text="${page}" th:href="@{/member/memberList(page=${page})}"></a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li class="page-item" th:class="${memberList.last} ? 'disabled'" >
+                <a class="page-link" th:href="${memberList.last} ? '#' :@{/member/memberList(page=${memberList.number + 2})}">&gt;</a>
+            </li>
+
+            <!-- 마지막 페이지 -->
+            <li class="page-item">
+                <a class="page-link" th:href="@{/member/memberList(page=${memberList.totalPages})}">Last</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
